@@ -4,11 +4,11 @@
 #include <cmath>
 #include <limits>
 
-// 화면 해상도
+// Screen resolution
 const int WIDTH = 512;
 const int HEIGHT = 512;
 
-// 벡터 연산을 위한 구조체
+// Structure for vector operations
 struct Vec3 {
     float x, y, z;
     Vec3() : x(0.0f), y(0.0f), z(0.0f) {}
@@ -23,13 +23,13 @@ struct Vec3 {
     }
 };
 
-// 광선 구조체
+// Ray structure
 struct Ray {
     Vec3 origin, direction;
     Ray(const Vec3& origin, const Vec3& direction) : origin(origin), direction(direction.normalize()) {}
 };
 
-// 구 객체
+// Sphere object
 struct Sphere {
     Vec3 center;
     float radius;
@@ -47,7 +47,7 @@ struct Sphere {
     }
 };
 
-// 카메라 설정
+// Camera settings
 struct Camera {
     Vec3 eye;
     float l, r, b, t, d;
@@ -63,7 +63,7 @@ struct Camera {
     }
 };
 
-// 장면 설정
+// Scene setup
 struct Scene {
     std::vector<Sphere> spheres;
 
@@ -73,34 +73,32 @@ struct Scene {
 
     bool intersect(const Ray& ray, Vec3& color) const {
         float tMin = std::numeric_limits<float>::max();
-        bool hitSphere = false;
+        bool hitObject = false;
 
-        // 구와 교차 검사
+        // Check intersection with spheres
         for (const auto& sphere : spheres) {
             float t;
             if (sphere.intersect(ray, t) && t < tMin) {
                 tMin = t;
-                hitSphere = true; // 구와 충돌했다면 플래그 설정
+                hitObject = true;
             }
         }
 
-        // 색상 결정: 구와 충돌한 경우만 흰색
-        if (hitSphere) {
-            color = Vec3(255, 255, 255); // 구와 충돌하면 흰색
+        if (hitObject) {
+            color = Vec3(255, 255, 255);
         }
         else {
-            color = Vec3(0, 0, 0); // 나머지는 검정색
+            color = Vec3(0, 0, 0);
         }
-
-        return hitSphere;
+        return hitObject;
     }
 };
 
-// 이미지 데이터 저장
+// Image data storage
 unsigned char image[HEIGHT][WIDTH][3];
 Scene scene;
 
-// 렌더링 함수
+// Render function
 void renderScene() {
     Camera camera(Vec3(0, 0, 0), -0.1f, 0.1f, -0.1f, 0.1f, 0.1f);
 
@@ -116,7 +114,7 @@ void renderScene() {
     }
 }
 
-// OpenGL 디스플레이 콜백
+// OpenGL display callback
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
     glDrawPixels(WIDTH, HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -124,7 +122,10 @@ void display() {
 }
 
 int main(int argc, char** argv) {
-    scene.addSphere(Sphere(Vec3(0, 0, -7), 2)); // 중앙 구 하나만 추가
+    // Add spheres
+    scene.addSphere(Sphere(Vec3(-4, 0, -7), 1));
+    scene.addSphere(Sphere(Vec3(0, 0, -7), 2));
+    scene.addSphere(Sphere(Vec3(4, 0, -7), 1));
 
     renderScene();
 
