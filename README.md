@@ -1,31 +1,23 @@
-# Ray Tracer - Computer Graphics Assignment
+## How to Run (Visual Studio)
 
-## Overview
-This is a simple ray tracer that renders a scene with a plane and three spheres using OpenGL and GLUT.
+1. **Download and unzip** the project from GitHub.
+2. **Open** `CGassignment1.sln` in Visual Studio.
+3. **Set build config** to `Debug` and `x86`.
+4. **Press F5** to build and run.
 
-## How to Run
-1. Download the repository:
-   - Clone with Git:  
-     ```
-     git clone https://github.com/YourUsername/CGAassignment1.git
-     ```
-   - Or download the ZIP file and extract it.
+## Required Settings
 
-2. Open `CGAassignment1.sln` in **Visual Studio 2022**.
+- **Include Directory**  
+  `Project → Properties → C/C++ → General → Additional Include Directories`  
+  → `$(ProjectDir)include`
 
-3. Build and run the project:
-   - **Build**: `Ctrl + Shift + B`
-   - **Run**: `F5` or `Ctrl + F5`
+- **Library Directory**  
+  `Project → Properties → Linker → General → Additional Library Directories`  
+  → `$(ProjectDir)lib`
 
-## Requirements
-- **freeglut** is included, no additional setup is needed.
-- The project should work without extra configuration.
+- **Linker Input**  
+  `Project → Properties → Linker → Input → Additional Dependencies`  
+  → `freeglut.lib`
 
-## Troubleshooting
-- If the program doesn't run, check:
-  - `freeglut.dll` is in the working directory.
-  - Running Visual Studio as **Administrator**.
-  - Build configuration is set to **x64** or **x86** (depending on your system).
-
----
-🔗 **GitHub Repository:** [Link to Repository](https://github.com/Okowan00/CGAassignment1)
+✅ No external installation is required.  
+✅ All needed libraries are already included in the project folder.
